@@ -40,13 +40,13 @@ namespace Clippy
             this.InitializeComponent();
             this.ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
-            MicaWindow Mica = new();
-            Mica.TrySetMicaBackdrop(this);
+           // MicaWindow Mica = new();
+           // Mica.TrySetMicaBackdrop(this);
         }
 
         private async void Hub_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("https://discord.gg/3WYcKat"));
 
-        private async void GitHub_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("https://github.com/FireCube/Clippy-by-FireCube"));
+        private async void GitHub_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("https://github.com/FireCubeStudios/Clippy"));
 
         private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Exit();
 

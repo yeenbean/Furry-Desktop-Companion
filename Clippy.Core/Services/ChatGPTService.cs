@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,20 +29,24 @@ namespace Clippy.Core.Services
         {
             Settings = settings;
             KeyService = keys;
-            if (SetAPI()) // Refresh API key
+            if (SetAPI() || Settings.HasKey) // Refresh API key
                 Add(new ClippyMessage(ClippyStart, true));
         }
              
         public void Refresh()
         {
             Messages.Clear();
-            SetAPI();
-            if(SetAPI()) // Refresh API key
+            if(SetAPI() || Settings.HasKey) // Refresh API key
                 Add(new ClippyMessage(ClippyStart, true));
         }
 
         public async Task SendAsync(IMessage message) /// Send a message
         {
+            if(!Settings.HasKey)
+            {
+                Add(new ClippyMessage(ClippyKey, false));
+                return;
+            }
             Add(message); // Send user message to UI
             List<ChatMessage> GPTMessages = new List<ChatMessage>
             {
@@ -51,7 +56,7 @@ namespace Clippy.Core.Services
             {
                 if (message is ClippyMessage)
                     GPTMessages.Add(ChatMessage.FromAssistant(m.Message));
-                else
+                else if (message is UserMessage)
                     GPTMessages.Add(ChatMessage.FromUser(m.Message));
             }
             await Task.Delay(300);
@@ -73,7 +78,7 @@ namespace Clippy.Core.Services
             }
             else
             {
-                Response.Message = $"Unfortunately an error occured `{completionResult.Error}`";
+                Response.Message = $"Unfortunately an error occured `{completionResult.Error.Message}`";
                 Response.IsLatest = false;
             }
         }
@@ -103,7 +108,7 @@ namespace Clippy.Core.Services
             }
             catch
             {
-                Add(new ClippyMessage(ClippyKey, false));
+                Add(new AnnouncementMessage(ClippyKey));
                 return false;
             }
         }

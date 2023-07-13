@@ -10,11 +10,23 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <PackageCertificateThumbprint>65562196CFE21357EA1A8658341FDDAA289673CF</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\Dulu\source\repos\cc\</AppxPackageDir>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Never</AppxBundle>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Clippy\Clippy.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Controls\AnnouncementMessage.xaml" />
     <None Remove="Controls\APIBox.xaml" />
     <None Remove="Controls\ClippyMessage.xaml" />
     <None Remove="Controls\MessageTriangle.xaml" />
@@ -67,6 +79,9 @@
     <None Update="Assets\Clippy\Clippy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\AnnouncementMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\APIBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
